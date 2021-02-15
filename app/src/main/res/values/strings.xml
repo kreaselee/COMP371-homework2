@@ -7,5 +7,11 @@
     <string name="textView_home">Find Your Brew</string>
     <string name="button_home">Get started</string>
 
+    <string name="editText_name">Search by beer name</string>
+    <string name="editText_date">mm/yyyy</string>
+    <string name="textView_range">Brewed</string>
+    <string name="textView_to">to</string>
+    <string name="switch_highPoint">High-point beer?</string>
+    <string name="button_search">Show results</string>
 
 </resources>
