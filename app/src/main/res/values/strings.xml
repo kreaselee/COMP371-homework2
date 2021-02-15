@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Homework 2</string>
+    <string name="second_activity">Search</string>
+    <string name="third_activity">Results</string>
+    <string name="fourth_activity">More info</string>
+
+    <string name="textView_home">Find Your Brew</string>
+    <string name="button_home">Get started</string>
+
+
 </resources>
