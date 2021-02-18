@@ -1,6 +1,8 @@
 package com.example.homework2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Switch;
@@ -28,5 +30,17 @@ public class SecondActivity extends AppCompatActivity {
         switch_highPoint = findViewById(R.id.switch_highPoint);
         button_search = findViewById(R.id.button_search);
 
+        button_search.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                launchNextActivity(v);
+            }
+        });
+
+    }
+
+    public void launchNextActivity(View v){
+        Intent intent = new Intent(this, SecondActivity.class);
+        startActivityForResult(intent, 1);
     }
 }
