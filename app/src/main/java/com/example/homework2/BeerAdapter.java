@@ -69,7 +69,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
             textView_description = itemView.findViewById(R.id.textView_description);
             imageView_beer = itemView.findViewById(R.id.imageView_beer);
             // set on click listener
-            imageView_beer.setOnClickListener(this);
+            // imageView_beer.setOnClickListener(this);
         }
 
     }
