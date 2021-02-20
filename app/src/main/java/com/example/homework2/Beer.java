@@ -3,12 +3,12 @@ package com.example.homework2;
 public class Beer {
     // instance variables
     private String name;
-    private String imageUrl;
     private String description;
+    private String imageUrl;
     private Boolean favorite;
 
     // constructor
-    public Beer(String name, String imageUrl, String description) {
+    public Beer(String name, String description, String imageUrl) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.description = description;

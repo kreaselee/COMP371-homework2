@@ -19,7 +19,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     private List<Beer> beers;
 
     // pass this list into the constructor of the adapter
-    public BeerAdapter(List<Beer> beerList) {
+    public BeerAdapter(List<Beer> beers) {
         this.beers = beers;
     }
 
@@ -50,6 +50,7 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
                 // launch next activity
             }
         });
+
     }
 
     @Override

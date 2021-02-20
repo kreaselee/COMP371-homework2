@@ -36,9 +36,9 @@ public class SecondActivity extends AppCompatActivity {
     private Boolean highPointCheck = false;
     private Button button_search;
 
-    private ArrayList<String> names = new ArrayList<>();
-    private ArrayList<String> descriptions = new ArrayList<>();
-    private ArrayList<String> images = new ArrayList<>();
+    private ArrayList<String> names;
+    private ArrayList<String> descriptions;
+    private ArrayList<String> images;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -76,6 +76,7 @@ public class SecondActivity extends AppCompatActivity {
 
     public void launchNextActivity(View v){
         // get text input and construct url
+        // ADD VALIDATIONS/CHECK FOR ERRORS
         constructed_url = api_url;
         // if user has entered a name
         if (!editText_name.getText().toString().trim().matches("")) {
@@ -108,23 +109,26 @@ public class SecondActivity extends AppCompatActivity {
 
                 try {
                     JSONArray jsonArray = new JSONArray(new String(responseBody));
-                    JSONObject jsonObject = jsonArray.getJSONObject(0);
-                    // System.out.println(jsonObject);
+
+                    names = new ArrayList<>();
+                    descriptions = new ArrayList<>();
+                    images = new ArrayList<>();
 
                     // for each beer,
                     // add its name, description, and imageUrl into each respective list
                     // to add to intent
-                    for (int i = 0; i < jsonObject.length(); i++) {
-                        names.add(jsonObject.getString("name"));
-                        descriptions.add(jsonObject.getString("description"));
-                        images.add(jsonObject.getString("image_url"));
+                    for (int i = 0; i < jsonArray.length(); i++) {
+                        names.add(jsonArray.getJSONObject(i).getString("name"));
+                        descriptions.add(jsonArray.getJSONObject(i).getString("description"));
+                        images.add(jsonArray.getJSONObject(i).getString("image_url"));
                     }
 
                     Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
                     // add info of beers into intent
-                    intent.putExtra("name", names);
-                    intent.putExtra("description", descriptions);
-                    intent.putExtra("imageUrl", images);
+                    intent.putExtra("numResults", jsonArray.length());
+                    intent.putExtra("names", names);
+                    intent.putExtra("descriptions", descriptions);
+                    intent.putExtra("images", images);
                     startActivity(intent);
                 }
                 catch (JSONException e) {
