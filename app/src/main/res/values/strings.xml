@@ -14,4 +14,6 @@
     <string name="switch_highPoint">High-point beer?</string>
     <string name="button_search">Show results</string>
 
+    <string name="desc">""</string>
+
 </resources>

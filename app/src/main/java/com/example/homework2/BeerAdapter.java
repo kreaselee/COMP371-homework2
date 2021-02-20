@@ -12,4 +12,8 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
     public BeerAdapter(List<Beer> beerList) {
         this.beerList = beerList;
     }
+
+    class ViewHolder extends RecyclerView.ViewHolder{
+        // FILL OUT ALL OF THIS 
+    }
 }
