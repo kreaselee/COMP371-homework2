@@ -43,7 +43,13 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
         holder.textView_name.setText(beer.getName());
         holder.textView_description.setText(beer.getDescription());
         Picasso.get().load(beer.getImageUrl()).into(holder.imageView_beer);
-        // set on click method
+        // add onset click listener
+        holder.imageView_beer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // launch next activity
+            }
+        });
     }
 
     @Override
