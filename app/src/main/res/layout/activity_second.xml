@@ -47,7 +47,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText_to"
+                android:id="@+id/editText_from"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -67,7 +67,7 @@
                 android:textSize="18sp" />
 
             <EditText
-                android:id="@+id/editText_from"
+                android:id="@+id/editText_to"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
