@@ -39,6 +39,10 @@ public class SecondActivity extends AppCompatActivity {
     private ArrayList<String> names;
     private ArrayList<String> descriptions;
     private ArrayList<String> images;
+    private ArrayList<String> abvs;
+    private ArrayList<String> brewedDates;
+    private ArrayList<String> foodPairingsList;
+    private ArrayList<String> tipsList;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -113,6 +117,10 @@ public class SecondActivity extends AppCompatActivity {
                     names = new ArrayList<>();
                     descriptions = new ArrayList<>();
                     images = new ArrayList<>();
+                    abvs = new ArrayList<>();
+                    brewedDates = new ArrayList<>();
+                    foodPairingsList = new ArrayList<>();
+                    tipsList = new ArrayList<>();
 
                     // for each beer,
                     // add its name, description, and imageUrl into each respective list
@@ -121,6 +129,10 @@ public class SecondActivity extends AppCompatActivity {
                         names.add(jsonArray.getJSONObject(i).getString("name"));
                         descriptions.add(jsonArray.getJSONObject(i).getString("description"));
                         images.add(jsonArray.getJSONObject(i).getString("image_url"));
+                        abvs.add(jsonArray.getJSONObject(i).getString("abv"));
+                        brewedDates.add(jsonArray.getJSONObject(i).getString("first_brewed"));
+                        foodPairingsList.add(jsonArray.getJSONObject(i).getJSONArray("food_pairing").toString());
+                        tipsList.add(jsonArray.getJSONObject(i).getString("brewers_tips"));
                     }
 
                     Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
@@ -129,6 +141,10 @@ public class SecondActivity extends AppCompatActivity {
                     intent.putExtra("names", names);
                     intent.putExtra("descriptions", descriptions);
                     intent.putExtra("images", images);
+                    intent.putExtra("abvs", abvs);
+                    intent.putExtra("brewedDates", brewedDates);
+                    intent.putExtra("foodPairingsList", foodPairingsList);
+                    intent.putExtra("tipsList", tipsList);
                     startActivity(intent);
                 }
                 catch (JSONException e) {

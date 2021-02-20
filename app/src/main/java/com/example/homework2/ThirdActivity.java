@@ -38,7 +38,11 @@ public class ThirdActivity extends AppCompatActivity {
             String name = intent.getStringArrayListExtra("names").get(i);
             String description = intent.getStringArrayListExtra("descriptions").get(i);
             String imageUrl = intent.getStringArrayListExtra("images").get(i);
-            Beer beer = new Beer(name, description, imageUrl);
+            String abv = intent.getStringArrayListExtra("abvs").get(i);
+            String firstBrewed = intent.getStringArrayListExtra("brewedDates").get(i);
+            String foodPairings = intent.getStringArrayListExtra("foodPairingsList").get(i);
+            String tips = intent.getStringArrayListExtra("tipsList").get(i);
+            Beer beer = new Beer(name, description, imageUrl, abv, firstBrewed, foodPairings, tips);
             beers.add(beer);
         }
 
