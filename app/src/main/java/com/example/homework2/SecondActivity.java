@@ -15,6 +15,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.loopj.android.http.AsyncHttpClient;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.ArrayList;
+
 import cz.msebera.android.httpclient.Header;
 
 public class SecondActivity extends AppCompatActivity {
@@ -29,6 +35,10 @@ public class SecondActivity extends AppCompatActivity {
     private Switch switch_highPoint;
     private Boolean highPointCheck = false;
     private Button button_search;
+
+    private ArrayList<String> names = new ArrayList<>();
+    private ArrayList<String> descriptions = new ArrayList<>();
+    private ArrayList<String> images = new ArrayList<>();
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -67,18 +77,22 @@ public class SecondActivity extends AppCompatActivity {
     public void launchNextActivity(View v){
         // get text input and construct url
         constructed_url = api_url;
+        // if user has entered a name
         if (!editText_name.getText().toString().trim().matches("")) {
             String name = editText_name.getText().toString().trim();
             constructed_url = constructed_url+"beer_name="+name;
         }
+        // if user has entered a start date
         if (!editText_from.getText().toString().trim().matches("")) {
             String from = editText_from.getText().toString().trim();
             constructed_url = constructed_url+"brewed_after="+from;
         }
+        // if user has entered an end date
         if (!editText_to.getText().toString().trim().matches("")) {
             String from = editText_to.getText().toString().trim();
             constructed_url = constructed_url+"brewed_before="+from;
         }
+        // if high point is checked
         if (highPointCheck) {
             constructed_url = constructed_url+"abv_gt=3.9";
         }
@@ -91,8 +105,32 @@ public class SecondActivity extends AppCompatActivity {
             public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                 Log.d("api response", new String(responseBody));
                 // System.out.println(constructed_url);
-                Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
-                startActivity(intent);
+
+                try {
+                    JSONArray jsonArray = new JSONArray(new String(responseBody));
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
+                    // System.out.println(jsonObject);
+
+                    // for each beer,
+                    // add its name, description, and imageUrl into each respective list
+                    // to add to intent
+                    for (int i = 0; i < jsonObject.length(); i++) {
+                        names.add(jsonObject.getString("name"));
+                        descriptions.add(jsonObject.getString("description"));
+                        images.add(jsonObject.getString("image_url"));
+                    }
+
+                    Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+                    // add info of beers into intent
+                    intent.putExtra("name", names);
+                    intent.putExtra("description", descriptions);
+                    intent.putExtra("imageUrl", images);
+                    startActivity(intent);
+                }
+                catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
             }
 
             @Override
