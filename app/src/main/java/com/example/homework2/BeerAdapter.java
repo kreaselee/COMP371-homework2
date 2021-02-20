@@ -10,6 +10,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
@@ -40,12 +42,13 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
         // set the view based on the data and the view names
         holder.textView_name.setText(beer.getName());
         holder.textView_description.setText(beer.getDescription());
-
+        Picasso.get().load(beer.getImageUrl()).into(holder.imageView_beer);
+        // set on click method
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        return beers.size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder{
@@ -60,6 +63,8 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
             textView_description = itemView.findViewById(R.id.textView_description);
             imageView_beer = itemView.findViewById(R.id.imageView_beer);
             // set on click listener
+            imageView_beer.setOnClickListener(this);
         }
+
     }
 }
