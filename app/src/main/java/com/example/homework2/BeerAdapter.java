@@ -1,6 +1,7 @@
 package com.example.homework2;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -47,10 +48,14 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
         holder.imageView_beer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // launch next activity
+                launchNextActivity(v);
             }
         });
+    }
 
+    public void launchNextActivity(View view) {
+        Intent intent = new Intent(view.getContext(), FourthActivity.class);
+        view.getContext().startActivity(intent);
     }
 
     @Override
