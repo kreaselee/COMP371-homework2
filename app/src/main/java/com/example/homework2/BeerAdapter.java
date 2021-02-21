@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -13,6 +14,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
@@ -48,13 +53,23 @@ public class BeerAdapter extends RecyclerView.Adapter<BeerAdapter.ViewHolder> {
         holder.imageView_beer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchNextActivity(v);
+                launchNextActivity(v, position);
             }
         });
     }
 
-    public void launchNextActivity(View view) {
+    public void launchNextActivity(View view, int position) {
         Intent intent = new Intent(view.getContext(), FourthActivity.class);
+
+        Beer beer = beers.get(position);
+        intent.putExtra("name", beer.getName());
+        intent.putExtra("imageUrl", beer.getImageUrl());
+        intent.putExtra("abv", beer.getAbv());
+        intent.putExtra("firstBrewed", beer.getFirstBrewed());
+        intent.putExtra("description", beer.getDescription());
+        intent.putExtra("foodPairings", beer.getFoodPairings());
+        intent.putExtra("tips", beer.getTips());
+
         view.getContext().startActivity(intent);
     }
 

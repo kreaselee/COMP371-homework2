@@ -38,7 +38,7 @@
             android:orientation="vertical">
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/imageView_imageUrl"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 tools:srcCompat="@tools:sample/avatars" />
@@ -67,6 +67,7 @@
                     android:layout_weight="1"
                     android:text="TextView"
                     android:textSize="20sp" />
+
             </LinearLayout>
 
             <TextView
@@ -78,6 +79,13 @@
 
             <TextView
                 android:id="@+id/textView_foodPairings"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:text="TextView" />
+
+            <TextView
+                android:id="@+id/textView_tips"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
