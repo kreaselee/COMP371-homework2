@@ -21,6 +21,7 @@ public class ThirdActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // look up views by id
         textView_results = findViewById(R.id.textView_results);

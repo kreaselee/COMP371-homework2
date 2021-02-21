@@ -2,6 +2,8 @@ package com.example.homework2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -22,11 +24,14 @@ public class FourthActivity extends AppCompatActivity {
     private TextView textView_description;
     private TextView textView_foodPairings;
     private TextView textView_tips;
+    private Button button_backResults;
+    private String receivedMessage;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fourth);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         textView_name = findViewById(R.id.textView_name);
         imageView_imageUrl = findViewById(R.id.imageView_imageUrl);
@@ -35,9 +40,13 @@ public class FourthActivity extends AppCompatActivity {
         textView_description = findViewById(R.id.textView_description);
         textView_foodPairings = findViewById(R.id.textView_foodPairings);
         textView_tips = findViewById(R.id.textView_tips);
+        button_backResults = findViewById(R.id.button_backResults);
 
         // unpack the intent
         Intent intent = getIntent();
+
+        receivedMessage = intent.getStringExtra("name");
+
         textView_name.setText(intent.getStringExtra("name"));
         textView_abv.setText("ABV: " + intent.getStringExtra("abv"));
         textView_firstBrewed.setText("First Brewed: " + intent.getStringExtra("firstBrewed"));
@@ -62,5 +71,20 @@ public class FourthActivity extends AppCompatActivity {
         textView_foodPairings.setText("Food Pairings: " + constructed);
         textView_tips.setText("Brewer's Tips: " + intent.getStringExtra("tips"));
         Picasso.get().load(intent.getStringExtra("imageUrl")).into(imageView_imageUrl);
+
+        button_backResults.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replyIntent(v);
+            }
+        });
+    }
+
+    public void replyIntent(View view){
+        // create a reply intent and pack the info, send it back to main
+        Intent replyIntent = new Intent();
+        // replyIntent.putExtra("replyName", receivedMessage);
+        setResult(RESULT_OK, replyIntent);
+        finish();
     }
 }
