@@ -17,7 +17,7 @@ public class Beer {
 
     // constructor
     public Beer(String name, String description, String imageUrl,
-                String abv, String firstBrewed, String foodPairings, String tips) {
+                String abv, String firstBrewed, String foodPairings, String tips, Boolean favorite) {
         this.name = name;
         this.imageUrl = imageUrl;
         this.description = description;
@@ -25,7 +25,7 @@ public class Beer {
         this.firstBrewed = firstBrewed;
         this.foodPairings = foodPairings;
         this.tips = tips;
-        this.favorite = false;
+        this.favorite = favorite;
     }
 
     // getters and setters

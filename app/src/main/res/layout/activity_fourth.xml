@@ -13,7 +13,7 @@
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        android:text="TextView"
+        android:text=""
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -41,7 +41,8 @@
                 android:id="@+id/imageView_imageUrl"
                 android:layout_width="250dp"
                 android:layout_height="250dp"
-                tools:srcCompat="@tools:sample/avatars" />
+                tools:srcCompat="@tools:sample/avatars"
+                tools:ignore="ContentDescription" />
 
             <LinearLayout
                 android:id="@+id/linearLayout"
@@ -56,7 +57,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="4sp"
                     android:layout_weight="1"
-                    android:text="TextView"
+                    android:text=""
                     android:textSize="20sp" />
 
                 <TextView
@@ -65,8 +66,8 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="4sp"
                     android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="TextView"
+                    android:gravity="end"
+                    android:text=""
                     android:textSize="20sp" />
 
             </LinearLayout>
@@ -76,21 +77,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="TextView" />
+                android:text="" />
 
             <TextView
                 android:id="@+id/textView_foodPairings"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="TextView" />
+                android:text="" />
 
             <TextView
                 android:id="@+id/textView_tips"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
-                android:text="TextView" />
+                android:text="" />
 
         </LinearLayout>
     </ScrollView>

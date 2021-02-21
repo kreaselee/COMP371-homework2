@@ -48,6 +48,7 @@ public class SecondActivity extends AppCompatActivity {
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_second);
+        // getActionBar().setDisplayHomeAsUpEnabled(false);
 
         editText_name = findViewById(R.id.editText_name);
         editText_from = findViewById(R.id.editText_from);

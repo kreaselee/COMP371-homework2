@@ -18,6 +18,14 @@
         app:layout_constraintStart_toEndOf="@+id/imageView_item_beer"
         app:layout_constraintTop_toTopOf="parent">
 
+        <ImageView
+            android:id="@+id/imageView_favorite"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="end"
+            android:contentDescription="@string/desc"
+            tools:srcCompat="@tools:sample/avatars" />
+
         <TextView
             android:id="@+id/textView_item_name"
             android:layout_width="wrap_content"
