@@ -72,6 +72,7 @@ public class FourthActivity extends AppCompatActivity {
         textView_tips.setText("Brewer's Tips: " + intent.getStringExtra("tips"));
         Picasso.get().load(intent.getStringExtra("imageUrl")).into(imageView_imageUrl);
 
+        // button to go back to results
         button_backResults.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

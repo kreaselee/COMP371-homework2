@@ -2,6 +2,8 @@ package com.example.homework2;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
@@ -16,16 +18,18 @@ public class ThirdActivity extends AppCompatActivity {
     private ArrayList<Beer> beers;
     private TextView textView_results;
     private RecyclerView recyclerView;
+    private Button button_backSearch;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_third);
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
 
         // look up views by id
         textView_results = findViewById(R.id.textView_results);
         recyclerView = findViewById(R.id.recyclerView_results);
+        button_backSearch = findViewById(R.id.button_backSearch);
 
         // implement ArrayList
         beers = new ArrayList<>();
@@ -54,5 +58,23 @@ public class ThirdActivity extends AppCompatActivity {
         // layout manager
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
+        // button to go back to search
+        button_backSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                replyIntent(v);
+            }
+        });
+
+
     }
+
+    public void replyIntent(View view){
+        // create a reply intent and pack the info, send it back to main
+        Intent replyIntent = new Intent();
+        setResult(RESULT_OK, replyIntent);
+        finish();
+    }
+
+
 }
