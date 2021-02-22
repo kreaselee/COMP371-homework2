@@ -17,5 +17,6 @@
     <string name="button_backResults">Back to results</string>
 
     <string name="desc">"click image"</string>
-
+    <string name="toast_invalidDate">"Date must be MM/YYYY format"</string>
+    <string name="toast_invalidRange">"Invalid date range"</string>
 </resources>

@@ -8,6 +8,7 @@ import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.Switch;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -19,7 +20,11 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import cz.msebera.android.httpclient.Header;
 
@@ -28,6 +33,7 @@ public class SecondActivity extends AppCompatActivity {
     private static final String api_url="https://api.punkapi.com/v2/beers?";
     private String constructed_url;
     private static AsyncHttpClient client = new AsyncHttpClient();
+    private Boolean sendGetRequest;
 
     private EditText editText_name;
     private EditText editText_from;
@@ -73,12 +79,141 @@ public class SecondActivity extends AppCompatActivity {
         button_search.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                launchNextActivity(v);
+                try {
+                    launchNextActivity(v);
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
     }
 
+    public void launchNextActivity(View v) throws ParseException {
+        // get text input and construct url
+        constructed_url = api_url;
+        sendGetRequest = true;
+        // if user has entered a name
+        if (!editText_name.getText().toString().trim().matches("")) {
+            String name = editText_name.getText().toString().trim();
+            constructed_url = constructed_url+"beer_name="+name+"&";
+        }
+        // if user has entered a start date
+        if (!editText_from.getText().toString().trim().matches("")) {
+            String from = editText_from.getText().toString().trim();
+            // if user enters a date with wrong format, make toast
+            if (from.length() != 7 || from.indexOf("/") != 2) {
+                sendGetRequest = false;
+                Toast.makeText(this, R.string.toast_invalidDate, Toast.LENGTH_SHORT).show();
+            }
+            // else add param to url
+            else {
+                constructed_url = constructed_url+"brewed_after="+from+"&";
+            }
+        }
+
+        // if user has entered an end date
+        if (!editText_to.getText().toString().trim().matches("")) {
+            String to = editText_to.getText().toString().trim();
+            // if user enters a date with wrong format, make toast
+            if (to.length() != 7 || to.indexOf("/") != 2) {
+                sendGetRequest = false;
+                Toast.makeText(this, R.string.toast_invalidDate, Toast.LENGTH_SHORT).show();
+            }
+
+            // if both dates are entered
+            // check to make sure first date comes before second
+            else if (!editText_from.getText().toString().trim().matches("")) {
+                String from = editText_from.getText().toString().trim();
+
+                DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                Date fromDate = dateFormat.parse("01/"+from);
+                Date toDate = dateFormat.parse("01/"+to);
+
+                if (fromDate.compareTo(toDate) > 0) {
+                    sendGetRequest = false;
+                    Toast.makeText(this, R.string.toast_invalidRange, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    constructed_url = constructed_url+"brewed_before="+to+"&";
+                }
+
+            }
+            // else, add param to url
+            else {
+                constructed_url = constructed_url+"brewed_before="+to+"&";
+            }
+
+        }
+
+        // if high point is checked
+        if (highPointCheck) {
+            constructed_url = constructed_url+"abv_gt=3.9";
+        }
+
+        System.out.println("Constructed url: " + constructed_url);
+
+        if (sendGetRequest) {
+            // set the header because of the api endpoint
+            client.addHeader("Accept", "application/json");
+            // send a get request to the api url
+            client.get(constructed_url, new AsyncHttpResponseHandler() {
+                @Override
+                public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
+                    Log.d("api response", new String(responseBody));
+                    // System.out.println(constructed_url);
+
+                    try {
+                        JSONArray jsonArray = new JSONArray(new String(responseBody));
+
+                        names = new ArrayList<>();
+                        descriptions = new ArrayList<>();
+                        images = new ArrayList<>();
+                        abvs = new ArrayList<>();
+                        brewedDates = new ArrayList<>();
+                        foodPairingsList = new ArrayList<>();
+                        tipsList = new ArrayList<>();
+
+                        // for each beer,
+                        // add its name, description, and imageUrl into each respective list
+                        // to add to intent
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            names.add(jsonArray.getJSONObject(i).getString("name"));
+                            descriptions.add(jsonArray.getJSONObject(i).getString("description"));
+                            images.add(jsonArray.getJSONObject(i).getString("image_url"));
+                            abvs.add(jsonArray.getJSONObject(i).getString("abv"));
+                            brewedDates.add(jsonArray.getJSONObject(i).getString("first_brewed"));
+                            foodPairingsList.add(jsonArray.getJSONObject(i).getJSONArray("food_pairing").toString());
+                            tipsList.add(jsonArray.getJSONObject(i).getString("brewers_tips"));
+                        }
+
+                        Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
+                        // add info of beers into intent
+                        intent.putExtra("numResults", jsonArray.length());
+                        intent.putExtra("names", names);
+                        intent.putExtra("descriptions", descriptions);
+                        intent.putExtra("images", images);
+                        intent.putExtra("abvs", abvs);
+                        intent.putExtra("brewedDates", brewedDates);
+                        intent.putExtra("foodPairingsList", foodPairingsList);
+                        intent.putExtra("tipsList", tipsList);
+                        startActivity(intent);
+                    }
+                    catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+
+                @Override
+                public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
+                    Log.e("api error", new String(responseBody));
+                }
+            });
+        }
+    }
+
+    /*
     public void launchNextActivity(View v){
         // get text input and construct url
         // ADD VALIDATIONS/CHECK FOR ERRORS
@@ -89,9 +224,16 @@ public class SecondActivity extends AppCompatActivity {
             constructed_url = constructed_url+"beer_name="+name;
         }
         // if user has entered a start date
+        // if user enters a date with wrong format, make toast
         if (!editText_from.getText().toString().trim().matches("")) {
             String from = editText_from.getText().toString().trim();
-            constructed_url = constructed_url+"brewed_after="+from;
+            if (from.length() != 6 || from.indexOf("/") != 2) {
+                Toast.makeText(this, R.string.toast_invalidDate, Toast.LENGTH_SHORT).show();
+            }
+            else {
+                constructed_url = constructed_url+"brewed_after="+from;
+            }
+
         }
         // if user has entered an end date
         if (!editText_to.getText().toString().trim().matches("")) {
@@ -160,4 +302,6 @@ public class SecondActivity extends AppCompatActivity {
             }
         });
     }
+
+     */
 }
