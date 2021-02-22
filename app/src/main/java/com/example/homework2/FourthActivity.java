@@ -84,7 +84,6 @@ public class FourthActivity extends AppCompatActivity {
     public void replyIntent(View view){
         // create a reply intent and pack the info, send it back to main
         Intent replyIntent = new Intent();
-        // replyIntent.putExtra("replyName", receivedMessage);
         setResult(RESULT_OK, replyIntent);
         finish();
     }

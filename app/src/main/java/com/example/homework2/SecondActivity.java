@@ -161,7 +161,6 @@ public class SecondActivity extends AppCompatActivity {
                 @Override
                 public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
                     Log.d("api response", new String(responseBody));
-                    // System.out.println(constructed_url);
 
                     try {
                         JSONArray jsonArray = new JSONArray(new String(responseBody));
@@ -212,96 +211,4 @@ public class SecondActivity extends AppCompatActivity {
             });
         }
     }
-
-    /*
-    public void launchNextActivity(View v){
-        // get text input and construct url
-        // ADD VALIDATIONS/CHECK FOR ERRORS
-        constructed_url = api_url;
-        // if user has entered a name
-        if (!editText_name.getText().toString().trim().matches("")) {
-            String name = editText_name.getText().toString().trim();
-            constructed_url = constructed_url+"beer_name="+name;
-        }
-        // if user has entered a start date
-        // if user enters a date with wrong format, make toast
-        if (!editText_from.getText().toString().trim().matches("")) {
-            String from = editText_from.getText().toString().trim();
-            if (from.length() != 6 || from.indexOf("/") != 2) {
-                Toast.makeText(this, R.string.toast_invalidDate, Toast.LENGTH_SHORT).show();
-            }
-            else {
-                constructed_url = constructed_url+"brewed_after="+from;
-            }
-
-        }
-        // if user has entered an end date
-        if (!editText_to.getText().toString().trim().matches("")) {
-            String from = editText_to.getText().toString().trim();
-            constructed_url = constructed_url+"brewed_before="+from;
-        }
-        // if high point is checked
-        if (highPointCheck) {
-            constructed_url = constructed_url+"abv_gt=3.9";
-        }
-
-        // set the header because of the api endpoint
-        client.addHeader("Accept", "application/json");
-        // send a get request to the api url
-        client.get(constructed_url, new AsyncHttpResponseHandler() {
-            @Override
-            public void onSuccess(int statusCode, Header[] headers, byte[] responseBody) {
-                Log.d("api response", new String(responseBody));
-                // System.out.println(constructed_url);
-
-                try {
-                    JSONArray jsonArray = new JSONArray(new String(responseBody));
-
-                    names = new ArrayList<>();
-                    descriptions = new ArrayList<>();
-                    images = new ArrayList<>();
-                    abvs = new ArrayList<>();
-                    brewedDates = new ArrayList<>();
-                    foodPairingsList = new ArrayList<>();
-                    tipsList = new ArrayList<>();
-
-                    // for each beer,
-                    // add its name, description, and imageUrl into each respective list
-                    // to add to intent
-                    for (int i = 0; i < jsonArray.length(); i++) {
-                        names.add(jsonArray.getJSONObject(i).getString("name"));
-                        descriptions.add(jsonArray.getJSONObject(i).getString("description"));
-                        images.add(jsonArray.getJSONObject(i).getString("image_url"));
-                        abvs.add(jsonArray.getJSONObject(i).getString("abv"));
-                        brewedDates.add(jsonArray.getJSONObject(i).getString("first_brewed"));
-                        foodPairingsList.add(jsonArray.getJSONObject(i).getJSONArray("food_pairing").toString());
-                        tipsList.add(jsonArray.getJSONObject(i).getString("brewers_tips"));
-                    }
-
-                    Intent intent = new Intent(SecondActivity.this, ThirdActivity.class);
-                    // add info of beers into intent
-                    intent.putExtra("numResults", jsonArray.length());
-                    intent.putExtra("names", names);
-                    intent.putExtra("descriptions", descriptions);
-                    intent.putExtra("images", images);
-                    intent.putExtra("abvs", abvs);
-                    intent.putExtra("brewedDates", brewedDates);
-                    intent.putExtra("foodPairingsList", foodPairingsList);
-                    intent.putExtra("tipsList", tipsList);
-                    startActivity(intent);
-                }
-                catch (JSONException e) {
-                    e.printStackTrace();
-                }
-
-            }
-
-            @Override
-            public void onFailure(int statusCode, Header[] headers, byte[] responseBody, Throwable error) {
-                Log.e("api error", new String(responseBody));
-            }
-        });
-    }
-
-     */
 }
